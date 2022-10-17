@@ -59,7 +59,7 @@ namespace Homework_Module25
                                    (person.JobPreferences.Intersect(q.Preferences) != null) &&
                                    (person.Profession == q.Profession)));
                 Console.Write($"{person.FirstName} {person.LastName} " );
-                foreach (var job in jobs)
+                foreach (var job in filter)
                 {
                     Console.Write($"{job.Profession},{job.Location} ");
                 }
