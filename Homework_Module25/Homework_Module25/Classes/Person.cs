@@ -12,5 +12,5 @@ namespace Homework_Module25.Classes
         public string Profession { get; set; }
         public List<string> JobPreferences { get; set; } = new();
         public List<string> LocationPreferences { get; set; } = new();
-    }
-}
+    };
+};

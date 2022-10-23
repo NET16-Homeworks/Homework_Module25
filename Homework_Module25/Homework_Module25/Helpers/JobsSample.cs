@@ -13,7 +13,9 @@ namespace Homework_Module25.Helpers
                 StartAge = 18,
                 EndAge = 24,
                 Profession = "Менеджер",
-                Location = new List<string> { "Беларусь", "Украина" }
+                Location = new List<string> { "Беларусь", "Украина" },
+                Preferences = new List<string> { "частичная занятость", "полная занятость" }
+                
             },
             new Job()
             {
@@ -21,12 +23,14 @@ namespace Homework_Module25.Helpers
                 StartAge = 21,
                 EndAge = 30,
                 Profession = "Девопс",
-                Location = new List<string> { "Украина" }
+                Location = new List<string> { "Украина" },
+                Preferences = new List<string> { "частичная занятость", "полная занятость", "удаленная работа" }
             },
             new Job()
             {
                 Profession = "Программист",
-                Location = new List<string> { "Беларусь", "Украина", "Россия" }
+                Location = new List<string> { "Беларусь", "Украина", "Россия" },
+                Preferences = new List<string> { "частичная занятость", "полная занятость", "удаленная работа" }
             },
         };
 

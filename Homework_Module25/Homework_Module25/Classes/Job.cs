@@ -2,7 +2,7 @@
 
 namespace Homework_Module25.Classes
 {
-    internal class Job
+    public class Job
     {
         public Sex? Sex { get; set; }
         public int? StartAge { get; set; }
@@ -10,5 +10,5 @@ namespace Homework_Module25.Classes
         public string Profession { get; set; }
         public List<string> Location { get; set; } = new();
         public List<string> Preferences { get; set; } = new();
-    }
-}
+    };
+};
