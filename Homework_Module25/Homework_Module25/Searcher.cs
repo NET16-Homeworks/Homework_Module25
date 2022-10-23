@@ -23,7 +23,7 @@ namespace Homework_Module25
 
             foreach (var job in result)
             {
-                //не выводит на консоль
+                
                 Console.WriteLine($"For the person {person.FirstName}, {person.LastName}" + Environment.NewLine +
                    $"the jobs {job.Profession}, location: {job.Location} are applicable".ToString());
             }
