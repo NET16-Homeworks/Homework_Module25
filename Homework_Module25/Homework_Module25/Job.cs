@@ -12,8 +12,8 @@ namespace Homework_Module25
         public string Location { get; set; }
         public List<string> Preferences { get; set; }
         public GenderEnum? Gender { get; set; }
-        public int StartAge { get; set; }
-        public int EndAge { get; set; }
+        public int? StartAge { get; set; }
+        public int? EndAge { get; set; }
         public string Profession { get; set; }
 
         public void PrintJob(Job job)

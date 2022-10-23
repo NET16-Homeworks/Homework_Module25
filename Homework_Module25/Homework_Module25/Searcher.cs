@@ -13,7 +13,7 @@ namespace Homework_Module25
             var result = jobs.Where(q => ((q.Gender == person.Gender || q.Gender == null) && 
                                    (person.LocationPreferances.Contains(q.Location)) && 
                                    ((person.BirthDateInAge(person.BirthDate) >= q.StartAge || q.StartAge == 0) && (person.BirthDateInAge(person.BirthDate) <= q.EndAge || q.EndAge == 0)) &&
-                                   (person.JobPreferences.Intersect(q.Preferences) != null) &&
+                                   (person.JobPreferences.Intersect(q.Preferences).Any() == true) &&
                                    (person.Profession == q.Profession)));
 
             foreach (var job in result)
@@ -28,7 +28,7 @@ namespace Homework_Module25
             var result = persons.Where(q => ((q.Gender == job.Gender || job.Gender == null) &&
                                    (q.LocationPreferances.Contains(job.Location)) &&
                                    ((q.BirthDateInAge(q.BirthDate) >= job.StartAge || job.StartAge == 0) && (q.BirthDateInAge(q.BirthDate) <= job.EndAge || job.EndAge == 0)) &&
-                                   (q.JobPreferences.Intersect(job.Preferences) != null) &&
+                                   (q.JobPreferences.Intersect(job.Preferences).Any() == true) &&
                                    (q.Profession == job.Profession)));
             foreach (var person in result)
             {
@@ -56,7 +56,7 @@ namespace Homework_Module25
                 var filter = jobs.Where(q => ((q.Gender == person.Gender || q.Gender == null) &&
                                    (person.LocationPreferances.Contains(q.Location)) &&
                                    ((person.BirthDateInAge(person.BirthDate) >= q.StartAge || q.StartAge == 0) && (person.BirthDateInAge(person.BirthDate) <= q.EndAge || q.EndAge == 0)) &&
-                                   (person.JobPreferences.Intersect(q.Preferences) != null) &&
+                                   (person.JobPreferences.Intersect(q.Preferences).Any() == true ) &&
                                    (person.Profession == q.Profession)));
                 Console.Write($"{person.FirstName} {person.LastName} " );
                 foreach (var job in filter)
