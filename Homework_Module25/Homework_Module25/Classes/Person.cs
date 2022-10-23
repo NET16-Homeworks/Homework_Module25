@@ -12,5 +12,17 @@ namespace Homework_Module25.Classes
         public string Profession { get; set; }
         public List<string> JobPreferences { get; set; } = new();
         public List<string> LocationPreferences { get; set; } = new();
+        public static void GetDetails(Person person)
+        {
+            Console.WriteLine($@"
+                    Name: {person.FirstName} {person.LastName};
+                    Email: {person.Email};
+                    Sex: {person.Sex};
+                    Birth Date: {person.BithDate};
+                    Profession: {person.Profession};
+                    JobPreferences: {String.Join(", ", person.JobPreferences.ToArray())};
+                    LocationPreferences: {String.Join(", ", person.LocationPreferences.ToArray())};
+                ");
+        }
     };
 };

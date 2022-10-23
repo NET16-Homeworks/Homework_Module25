@@ -9,7 +9,7 @@ namespace Homework_Module25.Classes
         {
             return jobList
                 .Where(job => job.Profession == person.Profession)
-                .Where(job => job.Sex == null || job.Sex == person.Sex)
+                .Where(job => job.Sex == person.Sex || job.Sex == null)
                 .Where(job => job.Location.Intersect(person.LocationPreferences).Any())
                 .Where(job => job.Preferences.Intersect(person.JobPreferences).Any())
                 .Where(job => VerifyAge(person.BithDate.Year, job.StartAge, job.EndAge))
@@ -31,10 +31,11 @@ namespace Homework_Module25.Classes
 
         }
 
-        private bool VerifyAge(int personAge, int? startAge, int? endAge)
+        private bool VerifyAge(int personBirthYear, int? startAge, int? endAge)
         {
-            bool isPersonAgeFitsStartAge = startAge == null || startAge >= personAge;
-            bool isPersonAgeFitsEndAge = endAge == null || personAge <= endAge;
+            var personAge = DateOnly.FromDateTime(DateTime.Now).Year - personBirthYear;
+            bool isPersonAgeFitsStartAge =  startAge >= personAge || startAge == null;
+            bool isPersonAgeFitsEndAge = personAge <= endAge || endAge == null;
 
             return isPersonAgeFitsStartAge && isPersonAgeFitsEndAge;
         }
