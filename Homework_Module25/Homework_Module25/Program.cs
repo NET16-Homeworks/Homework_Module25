@@ -122,7 +122,7 @@ searcher.FullSearchByPerson(people[1], jobs);
 
 Console.WriteLine("#############################");
 Console.WriteLine("People falling under the list of stated requirements:");
-searcher.FullSearchByJob(jobs[0], people);
+searcher.FullSearchByJob(jobs[1], people);
 
 Console.WriteLine("#############################");
 Console.WriteLine("Sex and count of people");

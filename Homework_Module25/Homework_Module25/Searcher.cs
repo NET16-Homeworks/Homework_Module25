@@ -18,8 +18,8 @@ namespace Homework_Module25
                     .Where(q => q.Sex == null || q.Sex == person.Sex)
                     .Where(q => person.LocationPreferences == null || person.LocationPreferences.Contains(q.Location))
                     .Where(q => q.Profession == person.Profession)
-                    .Where(q => (q.StartAge == null || q.StartAge >= age) &&
-                    (q.EndAge == null || q.EndAge <= age));
+                    .Where(q => (q.StartAge == null || q.StartAge <= age) &&
+                    (q.EndAge == null || q.EndAge >= age));
 
             foreach (var job in result)
             {
