@@ -4,7 +4,7 @@ List<Job> jobs = new List<Job>()
 {
     new Job()
     {
-        Sex = JobSex.Male,
+        Sex = Sex.Male,
         Location = "Minsk",
         StartAge = 18,
         EndAge = null,
@@ -22,7 +22,7 @@ List<Job> jobs = new List<Job>()
     },
     new Job()
     {
-        Sex = JobSex.Male,
+        Sex = Sex.Male,
         Location = "Brest",
         StartAge = 24,
         EndAge = null,
@@ -40,7 +40,7 @@ List<Job> jobs = new List<Job>()
     },
     new Job()
     {
-        Sex = JobSex.Female,
+        Sex = Sex.Female,
         Location = "Minsk",
         StartAge = 18,
         EndAge = null,
@@ -49,7 +49,7 @@ List<Job> jobs = new List<Job>()
     },
     new Job()
     {
-        Sex = JobSex.Male,
+        Sex = Sex.Male,
         Location = "Brest",
         StartAge = 18,
         EndAge = null,
@@ -97,20 +97,31 @@ List<Person> persons = new List<Person>()
         FirstName = "Anya",
         LastName = "Gubalova",
         Sex = Sex.Female,
-        Email = "YaChiksa@Gmail.com",
         LocationPreferances = new List<string>() { "Minsk" },
         BirthDate = new DateTime(2003, 12, 07),
         Profession = "Advertisement manager",
+        JobPreferances = new List<string>() { "Office" },
+    },
+    new Person()
+    {
+        FirstName = "Mihail",
+        LastName = "Myasov",
+        Sex = Sex.Male,
+        LocationPreferances = new List<string>() { "Brest" },
+        BirthDate = new DateTime(1992, 05, 09),
+        Profession = "Butcher",
         JobPreferances = new List<string>() { "Office" },
     },
 
 };
 
 Searcher searcher = new Searcher();
+searcher.message += message => Console.WriteLine(message);
+
 searcher.FullSearchByPerson(persons[0], jobs);
-Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-searcher.FullSearchByJob(jobs[5], persons);
-Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+Console.WriteLine("______________________________________________________________________________________________________");
+searcher.FullSearchByJob(jobs[2], persons);
+Console.WriteLine("______________________________________________________________________________________________________");
 searcher.WriteSexCount(persons);
-Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+Console.WriteLine("______________________________________________________________________________________________________");
 searcher.WriteSuiatableProfessions(persons, jobs);
