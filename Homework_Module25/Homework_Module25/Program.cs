@@ -8,8 +8,16 @@ List<Job> jobs = new Jobs().GetList();
 
 var searcher = new Searcher();
 var person = persons[0];
+var job = jobs[0];
 
-Person.GetDetails(person);
-var result = searcher.FullSearchByPerson(person, jobs);
+//Person.GetDetails(person);
+//var jobSearchResult = searcher.FullSearchByPerson(person, jobs);
+//jobSearchResult.GetJobDetails();
 
-result.GetJobDetails();
+//Job.GetDetails(job);
+//var personSearchResult = searcher.FullSearchByJob(job, persons);
+//personSearchResult.GetPersonsDetails();
+
+//searcher.WriteSexCount(persons);
+
+searcher.WriteSuitableProfessions(persons, jobs);

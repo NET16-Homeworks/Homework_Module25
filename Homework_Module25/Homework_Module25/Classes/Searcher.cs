@@ -16,19 +16,43 @@ namespace Homework_Module25.Classes
                 .ToList();
         }
 
-        void FullSearchByJob(Job job, List<Person> personList)
+        public List<Person> FullSearchByJob(Job job, List<Person> personList)
         {
-
+            return personList
+                .Where(person => person.Profession == job.Profession)
+                .Where(person => person.Sex == job.Sex || job.Sex == null)
+                .Where(person => person.LocationPreferences.Intersect(job.Location).Any())
+                .Where(person => person.JobPreferences.Intersect(job.Preferences).Any())
+                .Where(person => VerifyAge(person.BithDate.Year, job.StartAge, job.EndAge))
+                .ToList();
         }
 
-        void WriteSexCount(List<Person> personList)
+        public void WriteSexCount(List<Person> personList)
         {
+            var groups = personList.GroupBy(person => person.Sex);
 
+            Console.WriteLine("Persons applied by sex: ");
+
+            foreach (var group in groups)
+            {
+                Console.WriteLine($"{group.Key}: {group.Count()}");
+            }
         }
 
-        void WriteSuitableProfessions(List<Person> personList, List<Job> jobList)
+        public void WriteSuitableProfessions(List<Person> personList, List<Job> jobList)
         {
+            var joinedList = personList.Join(jobList,
+                person => person.Profession,
+                job => job.Profession,
+                (person, job) => new { person.FirstName, person.LastName, job.Profession, job.Location });
 
+            foreach (var item in joinedList)
+            {
+                Console.WriteLine(@$"
+                {item.FirstName} {item.LastName} 
+                Profession: {item.Profession}
+                Location: {String.Join(", ", item.Location.ToArray())}");
+            }
         }
 
         private bool VerifyAge(int personBirthYear, int? startAge, int? endAge)
