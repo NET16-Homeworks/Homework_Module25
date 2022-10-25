@@ -10,14 +10,14 @@ var searcher = new Searcher();
 var person = persons[0];
 var job = jobs[0];
 
-//Person.GetDetails(person);
-//var jobSearchResult = searcher.FullSearchByPerson(person, jobs);
-//jobSearchResult.GetJobDetails();
+Person.GetDetails(person);
+var jobSearchResult = searcher.FullSearchByPerson(person, jobs);
+jobSearchResult.GetJobDetails();
 
-//Job.GetDetails(job);
-//var personSearchResult = searcher.FullSearchByJob(job, persons);
-//personSearchResult.GetPersonsDetails();
+Job.GetDetails(job);
+var personSearchResult = searcher.FullSearchByJob(job, persons);
+personSearchResult.GetPersonsDetails();
 
-//searcher.WriteSexCount(persons);
+searcher.WriteSexCount(persons);
 
 searcher.WriteSuitableProfessions(persons, jobs);
