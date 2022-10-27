@@ -15,19 +15,7 @@ namespace Homework_Module25
                     .Where(q => q.Sex == null || q.Sex == person.Sex)
                     .Where(q => person.LocationPreferances.Contains(q.Location))
                     .Where(q => (personAge >= q.StartAge && personAge <= q.EndAge) || (q.StartAge == null || q.EndAge == null))
-                    .Where(q =>
-                    {
-                        var isContainPreference = false;
-                        foreach (var preferencesPerson in person.JobPreferances)
-                        {
-                            isContainPreference = q.Preferances.Any(q => q == preferencesPerson);
-                            if (isContainPreference)
-                            {
-                                return isContainPreference;
-                            }
-                        }
-                        return false;
-                    })
+                    .Where(q => q.Preferances.Intersect(person.JobPreferances).Any())
                     .Where(q => q.Profession == person.Profession);
             return resultList;
         }
@@ -37,19 +25,7 @@ namespace Homework_Module25
             var resultList = listWithPersons
                     .Where(q => job.Sex == null || q.Sex == job.Sex)
                     .Where(q => (job.StartAge == null || job.EndAge == null) || (job.StartAge < (DateTime.Now.Year - q.BirthDate.Year)) && (job.EndAge > (DateTime.Now.Year - q.BirthDate.Year)))
-                    .Where(q =>
-                    {
-                        var isContainPreference = false;
-                        foreach (var preferencesJob in job.Preferances)
-                        {
-                            isContainPreference = q.JobPreferances.Any(q => q == preferencesJob);
-                            if (isContainPreference)
-                            {
-                                return isContainPreference;
-                            }
-                        }
-                        return false;
-                    })
+                    .Where(q => q.JobPreferances.Intersect(job.Preferances).Any())
                     .Where(q => q.LocationPreferances.Contains(job.Location))
                     .Where(q => q.Profession == job.Profession);
             return resultList;
@@ -70,18 +46,20 @@ namespace Homework_Module25
 
         public static void WriteSuitableProfessions(List<Person> listWithPersons, List<Job> listWithJobs)
         {
-            IEnumerable<Job> jobs;
-            foreach (var person in listWithPersons)
+            var jobsInfo = listWithPersons.Join(listWithJobs, q => q.Profession, q => q.Profession, (q, w) => new
             {
-                jobs = listWithJobs.Where(q=>q.Profession == person.Profession);
-                foreach(var job in jobs)
-                {
-                    Console.WriteLine(@$"FirstName: {person.FirstName}" + Environment.NewLine + 
-                                       $"LastName: {person.LastName}" + Environment.NewLine + 
-                                       $"Profession: {job.Profession}" + Environment.NewLine + 
-                                       $"Location: {job.Location}" + Environment.NewLine + 
-                                        "=======================================");
-                }
+                FirstName = q.FirstName,
+                LastName = q.LastName,
+                Profession = w.Profession,
+                Location = w.Location
+            });
+            foreach (var job in jobsInfo)
+            {
+                Console.WriteLine(@$"FirstName: {job.FirstName}" + Environment.NewLine +
+                                   $"LastName: {job.LastName}" + Environment.NewLine +
+                                   $"Profession: {job.Profession}" + Environment.NewLine +
+                                   $"Location: {job.Location}" + Environment.NewLine +
+                                    "=======================================");
             }
         }
     }

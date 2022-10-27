@@ -14,7 +14,7 @@ namespace Homework_Module25
         public Sex Sex { get; set; }
         public DateOnly BirthDate { get; set; }
         public List<string> JobPreferances { get; set; }
-        public List<string>? LocationPreferances { get; set; }
+        public List<string> LocationPreferances { get; set; }
         public string Profession { get; set; }
     }
 }
