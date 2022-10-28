@@ -36,16 +36,16 @@ namespace Homework_Module25
         {
             var selectedPersons = persons
                 .Where(q => job.Sex == null || (int)q.Sex == (int)job.Sex)
-                .Where(q => q.LocationPreferances == null || q.LocationPreferances.Contains(job.Location))
+                .Where(q => !q.LocationPreferances.Any() || q.LocationPreferances.Contains(job.Location))
                 .Where(q => (job.StartAge == null || job.StartAge.Value <= CalculateAge(q.BirthDate)) && (job.EndAge == null || CalculateAge(q.BirthDate) <= job.EndAge.Value))
-                .Where(q => q.JobPreferances == null || job.Preferances.Intersect(q.JobPreferances) != null)
+                .Where(q => !q.JobPreferances.Any() || job.Preferances.Intersect(q.JobPreferances) != null)
                 .Where(q => job.Profession == q.Profession);
 
             if (selectedPersons.Any() == true)
             {
                 foreach (var person in selectedPersons)
                 {
-                    message?.Invoke($"Name: {NullToAny(person.FirstName)} {NullToAny(person.LastName)}, Email: {person.Email} | Profession: {NullToAny(job.Profession)}, Location {NullToAny(job.Location)}, by parameters: {EnumerableToString(job.Preferances)}");
+                    message?.Invoke($"Name: {person.FirstName} {person.LastName}, Email: {person.Email} | Profession: {NullToAny(job.Profession)}, Location {NullToAny(job.Location)}, by parameters: {EnumerableToString(job.Preferances)}");
                 }
             }
         }
