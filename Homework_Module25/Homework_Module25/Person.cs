@@ -21,8 +21,15 @@ namespace Homework_Module25
 
         public List<string> JobPreferences { get; set; }
 
-        public List<string>? LocationPreferences { get; set; }
+        public List<string> LocationPreferences { get; set; }
 
         public string Profession { get; set; }
+
+        public int Age()
+        {
+            DateTime date = DateTime.UtcNow;
+            int age = ((date.Year * 12 + date.Month) - (BirthDate.Year * 12 + BirthDate.Month)) / 12;
+            return age;
+        }
     }
 }

@@ -12,18 +12,16 @@ namespace Homework_Module25
 
         public void FullSearchByPerson(Person person, List<Job> jobs)
         {
-            int age = DateTime.Now.Year - person.BirthDate.Year;
             var result = jobs
-                    .Where(q => q.Preferences.Intersect(person.JobPreferences) != null)
+                    .Where(q => person.JobPreferences.Intersect(q.Preferences).Any())
                     .Where(q => q.Sex == null || q.Sex == person.Sex)
                     .Where(q => person.LocationPreferences == null || person.LocationPreferences.Contains(q.Location))
                     .Where(q => q.Profession == person.Profession)
-                    .Where(q => (q.StartAge == null || q.StartAge <= age) &&
-                    (q.EndAge == null || q.EndAge >= age));
+                    .Where(q => (q.StartAge == null || q.StartAge <= person.Age()) &&
+                    (q.EndAge == null || q.EndAge >= person.Age()));
 
             foreach (var job in result)
-            {
-                //не выводит на консоль
+            {               
                 Console.WriteLine($"For the person {person.FirstName}, {person.LastName}" + Environment.NewLine +
                    $"the jobs {job.Profession}, location: {job.Location} are applicable".ToString());
             }
@@ -32,12 +30,9 @@ namespace Homework_Module25
         //работодатель ищет человека на работу:
         public void FullSearchByJob(Job job, List<Person> people)
         {
-            Person person = new Person();
-            int age = DateTime.Now.Year - person.BirthDate.Year;
-
             var desiredPerson = people
                 .Where(q => q.Sex == job.Sex || job.Sex == null)
-                .Where(q => age >= job.StartAge && age <= job.EndAge)
+                .Where(q => q.Age() >= job.StartAge && q.Age() <= job.EndAge)
                 .Where(q => q.JobPreferences.Intersect(job.Preferences).Any())
                 .Where(q => q.LocationPreferences == null || q.LocationPreferences.Contains(job.Location))
                 .Where(q => q.Profession == job.Profession);
@@ -63,7 +58,6 @@ namespace Homework_Module25
             {
                 Console.WriteLine($"{res.Sex} | {res.Count}");
             }
-            // + вывести где м а где ж
         }
 
         public void WriteSuitableProfessions(List<Person> people, List<Job> jobs)
@@ -84,21 +78,6 @@ namespace Homework_Module25
                                   $"Profession = {res.Profession}, Location = {res.Location}");
             }
         }
-
-
-        //public void JobOutput(Job job)
-        //{
-        //    string? sex = string.Empty;
-        //    if (job.Sex == null)
-        //    {
-        //        sex = "N/A";
-        //    }
-
-        //    else
-        //    {
-        //        sex = job.Sex.ToString();
-        //    }
-        //}
     }
 }
 

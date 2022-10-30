@@ -15,9 +15,9 @@ namespace Homework_Module25
 
         public Sex? Sex { get; set; }
 
-        public Nullable<int> StartAge { get; set; }
+        public int? StartAge { get; set; }
 
-        public Nullable<int> EndAge { get; set; }
+        public int? EndAge { get; set; }
 
         public string Profession { get; set; }
     }
