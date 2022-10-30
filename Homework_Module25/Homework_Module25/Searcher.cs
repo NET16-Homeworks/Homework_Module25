@@ -39,7 +39,6 @@ namespace Homework_Module25
 
             foreach (var employee in desiredPerson)
             {
-                // не выводит на консоль
                 Console.WriteLine($"The people {employee.FirstName}, {employee.LastName}, {employee.Email}" + Environment.NewLine +
                     $"are suitable for the job {job.Profession}.".ToString());
             }
