@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework_Module25
+namespace Homework_Module25.Enums
 {
     public enum SexEnum
     {

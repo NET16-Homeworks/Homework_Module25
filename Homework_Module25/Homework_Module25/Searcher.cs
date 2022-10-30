@@ -4,79 +4,72 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Homework_Module25;
-
+using Homework_Module25.Enums;
+using Homework_Module25.Const;
 
 namespace Homework_Module25
-{
-    internal class Searcher
     {
-       
-        public void FullSearchByPerson(Person person, List<Job> jobs)
+        public class Searcher
         {
-            var result = jobs.Where(q => ((q.Sex == person.Sex || q.Sex == null) &&
-                                    (person.LocationPreferances.Contains(q.Location)) &&
-                                    ((person.BirthDayInAge(person.BirthDate) >= q.StartAge || q.StartAge == 0) && (person.BirthDayInAge(person.BirthDate) <= q.EndAge || q.EndAge == 0)) &&
-                                    (person.JobPreferences.Intersect(q.Preferences) != null) &&
-                                    (person.Profession == q.Profession)));
+            public List<Job> FullSearchByPerson(Person person, List<Job> jobList)
+            {
+                return jobList
+                    .Where(job => job.Profession == person.Profession)
+                    .Where(job => job.Sex == person.Sex || job.Sex == null)
+                    .Where(job => job.Location.Intersect(person.LocationPreferences).Any())
+                    .Where(job => job.Preferences.Intersect(person.JobPreferences).Any())
+                    .Where(job => VerifyAge(person.BirthDate.Year, job.StartAge, job.EndAge))
+                    .ToList();
+            }
 
-            foreach (var job in result)
+            public List<Person> FullSearchByJob(Job job, List<Person> personList)
             {
-                job.PrintJob(job);
+                return personList
+                    .Where(person => person.Profession == job.Profession)
+                    .Where(person => person.Sex == job.Sex || job.Sex == null)
+                    .Where(person => person.LocationPreferences.Intersect(job.Location).Any())
+                    .Where(person => person.JobPreferences.Intersect(job.Preferences).Any())
+                    .Where(person => VerifyAge(person.BirthDate.Year, job.StartAge, job.EndAge))
+                    .ToList();
             }
-        }
-        public void FullSearchByJob(Job job, List<Person> persons)
-        {
-            List<Job> jobAsList = new List<Job>();
-            jobAsList.Add(job);
-            foreach (var person in persons)
-            {
-                FullSearchByPerson(person, jobAsList);
-            }
-        }
 
-        public void WriteSexCount(List<Person> persons)
-        {
-            var groupedPersons = persons.GroupBy(q => q.Sex).Select(q =>
-                                                                    new
-                                                                    {
-                                                                        Name = q.Key,
-                                                                        Count = q.Count(),
-                                                                    });
-            foreach (var person in groupedPersons)
+            public void WriteSexApplied(List<Person> personList)
             {
-                Console.WriteLine($"{person.Name} - count: {person.Count}");
-            }
-        }
+                var groups = personList.GroupBy(person => person.Sex);
 
-        public void WriteSuiatableProfessions(List<Person> persons, List<Job> jobs)
-        {
-            foreach (var person in persons)
-            {
-                FullSearchByPerson(person, jobs);
-            }
-        }
+                Console.WriteLine("Persons applied by sex: ");
 
-        private string NullToAny<T>(T value)
-        {
-            if (value == null)
-            {
-                return "Any";
+                foreach (var group in groups)
+                {
+                    Console.WriteLine($"{group.Key}: {group.Count()}");
+                }
             }
-            else
-            {
-                return value.ToString();
-            }
-        }
 
-        private string EnumerableToString(List<string> list)
-        {
-            string result = String.Empty;
-            foreach (var item in list)
+            public void WriteSuitableProfessions(List<Person> personList, List<Job> jobList)
             {
-                result += $"{item}, ";
+                var joinedList = personList.Join(jobList,
+                    person => person.Profession,
+                    job => job.Profession,
+                    (person, job) => new { person.FirstName, person.LastName, job.Profession, job.Location });
+
+                foreach (var item in joinedList)
+                {
+                    Console.WriteLine(@$"
+                {item.FirstName} {item.LastName} 
+                Profession: {item.Profession}
+                Location: {String.Join(", ", item.Location.ToArray())}");
+                }
             }
-            return result.Remove(result.Length - 2);
-        }
-    }
-}
+
+            private bool VerifyAge(int personBirthYear, int? startAge, int? endAge)
+            {
+                var personAge = DateOnly.FromDateTime(DateTime.Now).Year - personBirthYear;
+                bool isPersonAgeFitsStartAge = startAge >= personAge || startAge == null;
+                bool isPersonAgeFitsEndAge = personAge <= endAge || endAge == null;
+
+                return isPersonAgeFitsStartAge && isPersonAgeFitsEndAge;
+            }
+        };
+    };
+
 
