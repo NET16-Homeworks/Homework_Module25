@@ -19,7 +19,7 @@ namespace Homework_Module25
                 .Where(q => q.Sex == null || (int)q.Sex == (int)person.Sex)
                 .Where(q => person.LocationPreferances == null || person.LocationPreferances.Contains(q.Location))
                 .Where(q => (q.StartAge == null || q.StartAge.Value <= age) && (q.EndAge == null || age <= q.EndAge.Value))
-                .Where(q => person.JobPreferances == null || q.Preferances.Intersect(person.JobPreferances) != null)
+                .Where(q => person.JobPreferances == null || q.Preferances.Intersect(person.JobPreferances).Any())
                 .Where(q => q.Profession == person.Profession)
                 ;
 
@@ -38,7 +38,7 @@ namespace Homework_Module25
                 .Where(q => job.Sex == null || (int)q.Sex == (int)job.Sex)
                 .Where(q => !q.LocationPreferances.Any() || q.LocationPreferances.Contains(job.Location))
                 .Where(q => (job.StartAge == null || job.StartAge.Value <= CalculateAge(q.BirthDate)) && (job.EndAge == null || CalculateAge(q.BirthDate) <= job.EndAge.Value))
-                .Where(q => !q.JobPreferances.Any() || job.Preferances.Intersect(q.JobPreferances) != null)
+                .Where(q => !q.JobPreferances.Any() || job.Preferances.Intersect(q.JobPreferances).Any())
                 .Where(q => job.Profession == q.Profession);
 
             if (selectedPersons.Any() == true)
