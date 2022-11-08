@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homework_Module25.Enums
 {
-    public enum SexEnum
+    public enum Sex
     {
         Man,
         Woman
